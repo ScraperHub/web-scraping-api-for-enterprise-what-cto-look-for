@@ -1,0 +1,14 @@
+{
+  "name": "web-scraping-api-enterprise-example",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Crawlbase Crawling API example with retries and logging",
+  "main": "fetcher.js",
+  "type": "module",
+  "scripts": {
+    "fetch": "node -e \"import('./fetcher.js').then(m => m.fetchPage(process.argv[1] || 'https://example.com').then(console.log).catch(e => { console.error(e); process.exit(1); }))\""
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "axios-retry": "^4.2.0"
+  }
+}

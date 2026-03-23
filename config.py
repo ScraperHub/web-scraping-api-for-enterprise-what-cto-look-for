@@ -1,0 +1,46 @@
+"""Configuration for Crawlbase Crawling API client. Tokens must be set via environment variables."""
+
+import os
+
+# Crawlbase API (https://crawlbase.com/docs/crawling-api/)
+CRAWLBASE_API_BASE = "https://api.crawlbase.com/"
+
+# Set these in your environment: CRAWLBASE_TOKEN, CRAWLBASE_JS_TOKEN
+CRAWLBASE_TOKEN = os.environ.get("CRAWLBASE_TOKEN")
+CRAWLBASE_JS_TOKEN = os.environ.get("CRAWLBASE_JS_TOKEN")
+
+# Timeout: 90s recommended per Crawlbase docs
+DEFAULT_TIMEOUT_SECONDS = 90
+
+# Response validation
+MIN_RESPONSE_LENGTH = 100
+
+# Retries for transient API errors (429, 503, timeouts)
+RETRY_ATTEMPTS = 3
+RETRY_MIN_WAIT_SECONDS = 2
+RETRY_MAX_WAIT_SECONDS = 10
+
+# Log level: DEBUG, INFO, WARNING, ERROR
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
+
+
+def get_token(use_js: bool = True) -> str:
+    """Return Crawlbase token from environment. Raises ValueError if missing.
+
+    Args:
+        use_js: If True, use CRAWLBASE_JS_TOKEN; else CRAWLBASE_TOKEN.
+
+    Returns:
+        Token string (stripped).
+
+    Raises:
+        ValueError: When the required token is not set in the environment.
+    """
+    token = CRAWLBASE_JS_TOKEN if use_js else CRAWLBASE_TOKEN
+    if not token or not str(token).strip():
+        var_name = "CRAWLBASE_JS_TOKEN" if use_js else "CRAWLBASE_TOKEN"
+        raise ValueError(
+            f"{var_name} is not set. Set it in your environment or .env file. "
+            "Get a token at https://crawlbase.com/signup"
+        )
+    return str(token).strip()
