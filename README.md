@@ -11,8 +11,9 @@ Production-style Crawlbase Crawling API integration with retries, logging, and r
 
 ## Setup
 
+From your local clone of the repository (same layout as [GitHub](https://github.com/ScraperHub/web-scraping-api-for-enterprise-what-cto-look-for)):
+
 ```bash
-cd src
 cp .env.example .env   # Edit with your tokens
 python3 -m venv .venv && source .venv/bin/activate   # or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
